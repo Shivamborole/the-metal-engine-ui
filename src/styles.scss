@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+/* Global Theme Variables */
+:root {
+  --primary: #3f51b5;
+  --primary-dark: #2f3f99;
+
+  --secondary: #ff9800;
+  --secondary-dark: #e88a00;
+
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+
+  --text-color: #333;
+  --text-light: #777;
+
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+
+/* Dark Mode Ready */
+body.dark {
+  --bg: #0f1117;
+  --card-bg: #1a1c23;
+
+  --text-color: #e5e7eb;
+  --text-light: #8b8b8b;
+
+  --primary: #90caf9;
+  --primary-dark: #42a5f5;
+}
+
+/* Global body style */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text-color);
+}
+.content-wrapper {
+  margin-left: 200px;
+  padding: 25px;
+  background: #f7f9fc;
+  min-height: 100vh;
+}
+
+/* LIGHT THEME (DEFAULT) */
+header {
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+/* DARK THEME */
+body.dark header {
+  background: #1e1e2f;
+  color: #ffffff;
+}
+
+body.dark header a,
+body.dark header span,
+body.dark header button {
+  color: #ffffff !important;
+}

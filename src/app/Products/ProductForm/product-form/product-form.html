@@ -1,0 +1,143 @@
+<div class="product-form-container">
+    <div class="page-header">
+        <h2>{{ isEdit ? 'Edit Product' : 'Add Product' }}</h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+
+        <div class="section-card">
+            <h3 class="section-title">Basic Details</h3>
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Product Name *</label>
+                    <input class="form-control" formControlName="name" />
+                </div>
+
+                <div>
+                    <label>SKU</label>
+                    <input class="form-control" formControlName="sku" />
+                </div>
+
+                <div>
+                    <label>Product Type *</label>
+                    <select class="form-control" formControlName="productType" (change)="onProductTypeChange()">
+                        <option value="Simple">Simple</option>
+                        <option value="BOM">BOM Based</option>
+                        <option value="Raw">Raw Material</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>HSN/SAC</label>
+                    <input class="form-control" formControlName="hsnOrSac" />
+                </div>
+
+                <div>
+                    <label>GST %</label>
+                    <input class="form-control" formControlName="gstRate" type="number" />
+                </div>
+
+                <div>
+                    <label>Selling Unit</label>
+                    <input class="form-control" formControlName="sellingUnit" />
+                </div>
+
+                <div>
+                    <label>Unit Price</label>
+                    <input class="form-control" formControlName="unitPrice" type="number" />
+                </div>
+                <div>
+                    <label>Category</label>
+                    <input class="form-control" formControlName="category" />
+                </div>
+                <div>
+                    <label>Selling Price*</label>
+                    <input class="form-control" type="number" formControlName="sellingPrice" />
+                </div>
+
+                <div>
+                    <label>Purchase Price *</label>
+                    <input class="form-control" type="number" formControlName="purchasePrice" />
+                </div>
+                <div>
+                    <label>Description</label>
+                    <textarea class="form-control" formControlName="description"></textarea>
+                </div>
+                <div class="checkbox-field">
+                    <label>
+                        <input type="checkbox" formControlName="isTaxInclusive" />
+                        Tax Inclusive
+                    </label>
+                </div>
+
+                <div class="checkbox-field">
+                    <label>
+                        <input type="checkbox" formControlName="isActive" />
+                        Active
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOM Section -->
+        <div class="section-card" *ngIf="form.get('productType')?.value === 'BOM'">
+            <div class="section-header">
+                <h3 class="section-title">BOM (Bill of Materials)</h3>
+                <button type="button" class="small-btn" (click)="addBomLine()">+ Add Material</button>
+            </div>
+
+            <div class="bom-table" *ngIf="bomLines.controls.length; else noBom">
+
+                <div class="bom-header">
+                    <div>Material</div>
+                    <div>Qty / Unit</div>
+                    <div>Waste %</div>
+                    <div></div>
+                </div>
+
+                <div class="bom-row" *ngFor="let line of bomLines.controls; let i = index" [formGroup]="$any(line)">
+
+                    <div>
+                        <select class="form-control" formControlName="materialId">
+                            <option [ngValue]="null">Select...</option>
+                            <option *ngFor="let m of materials" [ngValue]="m.id">
+                                {{ m.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <input class="form-control" type="number" formControlName="qtyRequiredPerUnit" />
+                    </div>
+
+                    <div>
+                        <input class="form-control" type="number" formControlName="wastePercentage" />
+                    </div>
+
+                    <div>
+                        <button type="button" class="link-btn" (click)="removeBomLine(i)">Remove</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <ng-template #noBom>
+                <p class="empty-bom">No materials added. Click "Add Material".</p>
+            </ng-template>
+        </div>
+
+        <p class="error" *ngIf="error">{{ error }}</p>
+
+        <div class="form-actions">
+            <button class="btn-save" [disabled]="saving" type="submit">
+                {{ saving ? 'Saving...' : (isEdit ? 'Update Product' : 'Save Product') }}
+            </button>
+
+            <button class="btn-cancel" type="button" (click)="cancel()">Cancel</button>
+        </div>
+
+    </form>
+</div>

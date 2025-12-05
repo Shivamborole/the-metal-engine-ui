@@ -1,0 +1,178 @@
+.page-container {
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .add-btn {
+    background: #2563eb;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+
+    &:hover {
+      background: #1d4ed8;
+    }
+  }
+}
+
+.table-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 12px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f3f4f6;
+  }
+
+  td {
+    padding: 12px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  tr:hover td {
+    background: #f9fafb;
+  }
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  background: #e5e7eb;
+
+  &.active-badge {
+    background: #d1fae5;
+    color: #065f46;
+  }
+}
+
+.use-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+.loading {
+  font-size: 14px;
+  color: #555;
+}
+
+.error {
+  color: red;
+  font-weight: 600;
+}
+.actions-col {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #dc2626;
+  }
+
+  &:disabled {
+    background: #fca5a5;
+    cursor: not-allowed;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.active-badge {
+  background: #d1f7d6;
+  color: #0f8a00;
+}
+
+.inactive-badge {
+  background: #eee;
+  color: #777;
+}
+
+.use-btn {
+  background: #0d6efd;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: white;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.use-btn:disabled {
+  background: #9bb9ff;
+  cursor: not-allowed;
+}
+
+.delete-btn {
+  background: #dc3545;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-btn:disabled {
+  background: #f5a3aa;
+  cursor: not-allowed;
+}
+

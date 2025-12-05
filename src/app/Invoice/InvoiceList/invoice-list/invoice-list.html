@@ -1,0 +1,106 @@
+<div class="invoice-list-container">
+
+  <!-- HEADER -->
+  <div class="header-row">
+    <h2>Invoices & Quotations</h2>
+    <button class="new-btn" (click)="newInvoice()">+ New Invoice / Quotation</button>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <input type="text"
+           placeholder="Search invoice number or customer..."
+           [(ngModel)]="searchText"
+           (input)="applyFilters()">
+
+    <select [(ngModel)]="typeFilter" (change)="applyFilters()">
+      <option value="all">All Types</option>
+      <option value="invoice">Invoices</option>
+      <option value="quotation">Quotations</option>
+    </select>
+
+    <select [(ngModel)]="statusFilter" (change)="applyFilters()">
+      <option value="all">All Status</option>
+      <option value="draft">Draft</option>
+      <option value="final">Final</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+
+    <!-- ⭐ NEW PAYMENT FILTER -->
+    <select [(ngModel)]="paymentFilter" (change)="applyFilters()">
+      <option value="all">All Payments</option>
+      <option value="paid">Paid</option>
+      <option value="unpaid">Unpaid</option>
+      <option value="partial">Partial</option>
+    </select>
+  </div>
+
+  <!-- TABLE -->
+  <div class="invoice-table">
+
+    <div class="table-header">
+      <span>Invoice #</span>
+      <span>Date</span>
+      <span>Customer</span>
+      <span>Type</span>
+      <span>Total</span>
+      <span>Payment</span>
+      <span>Status</span>
+      <span></span>
+    </div>
+
+    <div class="table-row" *ngFor="let inv of filtered">
+
+      <span>{{ inv.invoiceNumber }}</span>
+      <span>{{ inv.invoiceDate | date }}</span>
+      <span>{{ inv.customerName }}</span>
+
+      <span>
+        <span class="badge type" [ngClass]="inv.documentType === 1 ? 'quote' : 'invoice'">
+          {{ inv.documentType === 1 ? 'QUOTATION' : 'INVOICE' }}
+        </span>
+      </span>
+
+      <span>₹ {{ inv.totalAmount }}</span>
+
+      <span>
+        <span class="badge payment" [ngClass]="inv.paymentStatus">
+          {{ inv.paymentStatus | uppercase }}
+        </span>
+      </span>
+
+      <span>
+        <span class="badge status" [ngClass]="inv.status">
+          {{ inv.status | uppercase }}
+        </span>
+      </span>
+
+      <!-- ACTIONS -->
+      <div class="menu-wrapper">
+
+        <button class="menu-btn" (click)="toggleMenu(inv)">⋮</button>
+
+        <div class="menu" *ngIf="inv.open">
+
+          <button (click)="editInvoice(inv.id)">✏️ Edit</button>
+          <button (click)="openPDF(inv.id)">📄 PDF</button>
+
+          <!-- ⭐ Mark as Paid (only if unpaid) -->
+          <button *ngIf="inv.paymentStatus === 'unpaid'"
+                  (click)="markAsPaid(inv)">💰 Mark as Paid</button>
+
+          <!-- ⭐ Convert Quotation → Invoice -->
+          <button *ngIf="inv.documentType === 1"
+                  (click)="convertToInvoice(inv)">
+            🔄 Convert to Invoice
+          </button>
+
+          <button (click)="deleteInvoice(inv.id)">🗑 Delete</button>
+
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="filtered.length === 0" class="empty">No records found.</p>
+  </div>
+</div>

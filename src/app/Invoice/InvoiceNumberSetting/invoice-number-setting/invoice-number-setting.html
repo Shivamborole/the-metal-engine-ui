@@ -1,0 +1,52 @@
+<div class="settings-container" [formGroup]="form">
+  <div class="settings-card">
+    <h2>Invoice Numbering</h2>
+    <p class="subtitle">
+      Control how invoice numbers are generated for this company.
+    </p>
+
+    <div *ngIf="loading" class="info-text">Loading settings...</div>
+    <div *ngIf="error" class="error-text">{{ error }}</div>
+
+    <div class="form-grid" *ngIf="!loading">
+      <div>
+        <label>Prefix</label>
+        <input class="form-control" formControlName="prefix" placeholder="e.g. INV-" />
+        <small class="hint">Shown before the number. Leave empty for none.</small>
+      </div>
+
+      <div>
+        <label>Suffix</label>
+        <input class="form-control" formControlName="suffix" placeholder="e.g. /24-25" />
+        <small class="hint">Shown after the number. Leave empty for none.</small>
+      </div>
+
+      <div>
+        <label>Number Padding</label>
+        <input type="number" class="form-control" formControlName="padding" />
+        <small class="hint">Minimum digits (e.g. 5 → 00001, 00002).</small>
+      </div>
+
+      <div>
+        <label>Reset Frequency</label>
+        <select class="form-control" formControlName="resetFrequency">
+          <option value="Never">Never</option>
+          <option value="Yearly">Every Financial Year</option>
+          <option value="Monthly">Every Month</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="preview-box" *ngIf="currentSettings">
+      <div>Current counter: {{ currentSettings.currentNumber }}</div>
+      <div>Next sample number:</div>
+      <div class="preview-value">{{ previewNextNumber }}</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="save()" [disabled]="saving || loading">
+        {{ saving ? 'Saving...' : 'Save Settings' }}
+      </button>
+    </div>
+  </div>
+</div>

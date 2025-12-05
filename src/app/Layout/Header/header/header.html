@@ -1,0 +1,28 @@
+<header class="app-header">
+
+  <div class="left-section">
+    <h3>The Metal Engine</h3>
+  </div>
+
+  <div class="right-section">
+
+    <!-- Active Company Display -->
+    <span 
+      class="active-company"
+      [ngClass]="{ 'no-company': !activeCompanyId }">
+      {{ activeCompanyName || 'No active company selected' }}
+    </span>
+
+    <!-- Theme Toggle -->
+    <button class="theme-btn" (click)="toggleTheme()">
+      {{ themeMode === 'light' ? '🌙' : '☀️' }}
+    </button>
+
+    <!-- Logout -->
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+
+  </div>
+
+</header>

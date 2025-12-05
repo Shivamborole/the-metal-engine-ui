@@ -1,0 +1,33 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">The Metal Engine</div>
+  </div>
+
+  <ul class="menu">
+
+    <li *ngFor="let item of menu"
+        class="menu-item"
+        [class.has-children]="item.children?.length"
+        [class.open]="item.open">
+
+      <!-- Parent Row -->
+      <div class="row" (click)="onParentClick(item)">
+        <span class="parent">{{ item.title }}</span>
+      </div>
+
+      <!-- CHILDREN -->
+      <ul class="submenu" *ngIf="item.children?.length">
+        <li *ngFor="let child of item.children">
+          <a 
+            [routerLink]="child.route"
+            routerLinkActive="active-child"
+            (click)="$event.stopPropagation()">
+            {{ child.title }}
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+  </ul>
+</div>

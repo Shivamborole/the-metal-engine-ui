@@ -1,0 +1,14 @@
+<select class="form-select"
+        [value]="activeCompanyId"
+        (change)="setCompany($event)">
+        
+  <option value="" disabled>Select Company</option>
+
+  @for (c of companies; track c.companyId) {
+    <option [value]="c.companyId">
+      {{ c.companyName }}
+    </option>
+  }
+
+</select>
+

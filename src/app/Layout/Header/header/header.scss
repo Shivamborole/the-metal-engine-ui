@@ -1,0 +1,58 @@
+.app-header {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  .left-section h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .active-company {
+      background: #eef2ff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #4338ca;
+      font-size: 15px;
+      border: 1px solid #c7d2fe;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .logout-btn {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+
+      &:hover {
+        background: #2563eb;
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+/* Sidebar Main */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg, #eef2ff 0%, #f0f4ff 50%, #e8ecf6 100%);
+  border-right: 1px solid #e5e7eb;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.sidebar-header {
+  padding: 0 26px 26px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Menu Wrapper */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Menu Item */
+.menu-item {
+  padding: 4px 14px;
+  margin-bottom: 2px;
+}
+
+/* Row (clickable parent) */
+.row {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.row:hover {
+  background: #e4e9ff;
+}
+
+.parent {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+/* Arrow for parent items */
+.has-children .parent::after {
+  content: "›";
+  margin-left: auto;
+  color: #9ca3af;
+  transition: 0.2s;
+}
+
+.has-children.open .parent::after {
+  transform: rotate(90deg);
+}
+
+/* Submenu */
+.submenu {
+  padding-left: 22px;
+  border-left: 1px dashed #d1d5db;
+  margin-top: 6px;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+
+  transition: max-height 0.25s ease, opacity 0.25s ease;
+}
+
+.has-children.open .submenu {
+  max-height: 300px;
+  opacity: 1;
+}
+
+/* Child item styling */
+.submenu li a {
+  display: block;
+  padding: 7px 0;
+  font-size: 14px;
+  color: #4b5563;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.submenu li a:hover {
+  color: #2563eb;
+}
+
+.active-child {
+  color: #1e40af !important;
+  font-weight: 600;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}

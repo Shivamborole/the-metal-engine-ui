@@ -1,0 +1,65 @@
+<div class="page-container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h2>Your Companies</h2>
+    <button class="add-btn" (click)="goToAdd()">+ Add Company</button>
+  </div>
+
+  <div class="table-container">
+    <table class="company-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>City</th>
+          <th>State</th>
+          <th>GST Number</th>
+          <th>Status</th>
+          <th style="width:160px;">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of companies">
+
+          <td>{{ c.name }}</td>
+          <td>{{ c.city }}</td>
+          <td>{{ c.state }}</td>
+          <td>{{ c.gstNumber }}</td>
+
+          <!-- Status -->
+          <td>
+            <span
+              class="status-badge"
+              [ngClass]="c.isActive ? 'active-badge' : 'inactive-badge'">
+              {{ c.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+
+          <!-- Action -->
+          <td class="actions-col">
+
+            <!-- Use / Selected -->
+            <button 
+              class="use-btn"
+              (click)="useCompany(c)"
+              [disabled]="c.isActive">
+              {{ c.isActive ? 'Selected' : 'Use' }}
+            </button>
+
+            <!-- Delete -->
+            <button
+              class="delete-btn"
+              (click)="deleteCompany(c.id)"
+              [disabled]="c.isActive">
+              Delete
+            </button>
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

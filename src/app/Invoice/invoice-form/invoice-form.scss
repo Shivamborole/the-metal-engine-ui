@@ -1,0 +1,379 @@
+/* ============================================
+   INVOICE PAGE LAYOUT
+============================================ */
+
+.invoice-page {
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 20px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.invoice-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) 320px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.invoice-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .invoice-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .invoice-summary-col {
+    position: static;
+    margin-top: 12px;
+  }
+}
+
+/* ============================================
+   SECTION CARDS
+============================================ */
+
+.section-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  border: 1px solid #eef1f7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 16px;
+}
+
+/* Document type row */
+.doc-type-row {
+  display: flex;
+  gap: 16px;
+}
+
+/* ============================================
+   FORM CONTROLS
+============================================ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-control {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #fff;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+  outline: none;
+}
+
+/* Remove arrows on number inputs */
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-arrows {
+  -moz-appearance: textfield;
+}
+
+/* Generic 2-column grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px;
+}
+
+/* ============================================
+   INVOICE DETAILS GRID
+============================================ */
+
+.invoice-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+@media (max-width: 960px) {
+  .invoice-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .invoice-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   CUSTOMER & ADDRESS SECTION
+============================================ */
+
+.customer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Top row: select + checkbox */
+.customer-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.customer-select {
+  flex: 1;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.checkbox-wrapper label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Billing/Shipping grid */
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.address-box {
+  background: #fafbfc;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 16px 18px;
+}
+
+.address-box h4 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.vendor-row {
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   ITEMS TABLE (GRID)
+============================================ */
+
+.items-header,
+.item-row {
+  display: grid;
+  grid-template-columns:
+    1.2fr /* Product */
+    1.8fr /* Description */
+    0.8fr /* HSN */
+    0.6fr /* Qty */
+    0.8fr /* Rate */
+    0.6fr /* Disc */
+    0.7fr /* CGST */
+    0.7fr /* SGST */
+    0.7fr /* IGST */
+    1fr   /* Total */
+    0.4fr; /* Remove button */
+  gap: 12px;
+  align-items: center;
+}
+
+.items-header {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.item-row {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Items */
+@media (max-width: 1100px) {
+  .items-header,
+  .item-row {
+    grid-template-columns:
+      1fr /* Product */
+      1.5fr /* Description */
+      0.8fr /* HSN */
+      0.6fr /* Qty */
+      0.8fr /* Rate */
+      0.6fr /* Disc */
+      0.7fr /* CGST */
+      0.7fr /* SGST */
+      0.7fr /* IGST */
+      1fr
+      0.4fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .items-header,
+  .item-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .items-header span:nth-last-child(-n + 3),
+  .item-row > *:nth-last-child(-n + 3) {
+    /* stack last three on new rows on small screens */
+  }
+}
+
+/* Remove button */
+.remove-btn {
+  border: none;
+  padding: 6px 0;
+  border-radius: 6px;
+  background: #ef4444;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+}
+
+/* Add item button */
+.add-item-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px dashed #2563eb;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ============================================
+   SUMMARY PANEL (RIGHT)
+============================================ */
+
+.invoice-summary-col {
+  position: sticky;
+  top: 90px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #eef1f7;
+  padding: 18px 20px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.1);
+}
+
+.summary-title {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.summary-total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ============================================
+   ACTION BUTTONS
+============================================ */
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn-submit,
+.btn-cancel {
+  padding: 9px 22px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+.btn-cancel {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-cancel:hover {
+  background: #d1d5db;
+}

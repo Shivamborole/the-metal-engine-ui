@@ -1,0 +1,350 @@
+<div class="invoice-page">
+  <div class="invoice-layout">
+
+    <!-- ============== LEFT: MAIN FORM COLUMN ============== -->
+    <div class="invoice-main-col" [formGroup]="form">
+
+      <!-- ========== DOCUMENT TYPE ========== -->
+      <div class="section-card">
+        <div class="doc-type-row">
+          <div class="form-group">
+            <label>Document Type</label>
+            <select class="form-control" formControlName="documentType">
+              <!-- 2 = Invoice, 1 = Quotation (matches TS) -->
+              <option [ngValue]="2">Invoice</option>
+              <option [ngValue]="1">Quotation</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== INVOICE / QUOTATION DETAILS ========== -->
+      <div class="section-card">
+        <h3 class="section-title">
+          {{ isInvoice ? 'Invoice Details' : 'Quotation Details' }}
+        </h3>
+
+        <div class="invoice-details-grid">
+          <!-- Always show Invoice Number -->
+          <div class="form-group">
+            <label>Invoice Number</label>
+            <input class="form-control" formControlName="invoiceNumber" readonly />
+          </div>
+
+          <!-- Common date (Invoice / Quotation) -->
+          <div class="form-group">
+            <label>{{ isInvoice ? 'Invoice Date *' : 'Quotation Date *' }}</label>
+            <input type="date" class="form-control" formControlName="invoiceDate" />
+          </div>
+
+          <!-- ========== INVOICE-ONLY FIELDS ========== -->
+          <div class="form-group" *ngIf="isInvoice">
+            <label>Time of Supply</label>
+            <input type="time" class="form-control" formControlName="timeOfSupply" />
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>Place of Supply *</label>
+            <input class="form-control" formControlName="placeOfSupply" />
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>Transport Mode</label>
+            <select class="form-control" formControlName="transportMode">
+              <option value="">Select</option>
+              <option value="Self Collection">Self Collection</option>
+              <option value="Road Transport">Road Transport</option>
+              <option value="Rail Transport">Rail Transport</option>
+              <option value="Air Transport">Air Transport</option>
+              <option value="Ship / Sea Transport">Ship / Sea Transport</option>
+              <option value="Courier">Courier</option>
+              <option value="Tempo / Local Delivery">Tempo / Local Delivery</option>
+            </select>
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>Vehicle Number</label>
+            <input class="form-control" formControlName="vehicleNumber" />
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>E-Way Bill</label>
+            <input class="form-control" formControlName="ewayBillNumber" />
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>PO Number</label>
+            <input class="form-control" formControlName="purchaseOrderNo" />
+          </div>
+
+          <div class="form-group" *ngIf="isInvoice">
+            <label>PO Date</label>
+            <input type="date" class="form-control" formControlName="purchaseOrderDate" />
+          </div>
+
+          <!-- ========== QUOTATION-ONLY FIELDS (use dueDate + referenceNumber from TS) ========== -->
+          <div class="form-group" *ngIf="isQuotation">
+            <label>Reference Number</label>
+            <input class="form-control" formControlName="referenceNumber" />
+          </div>
+
+          <div class="form-group" *ngIf="isQuotation">
+            <label>Valid Until</label>
+            <input type="date" class="form-control" formControlName="dueDate" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== CUSTOMER & ADDRESS ========== -->
+      <div class="section-card customer-section">
+        <h3 class="section-title">Customer &amp; Address</h3>
+
+        <!-- Customer select + checkbox -->
+        <div class="customer-top-row">
+          <div class="form-group customer-select">
+            <label>Select Customer *</label>
+            <select class="form-control" formControlName="customerId" (change)="onCustomerChange($event)">
+              <option value="">Select</option>
+              <option *ngFor="let c of customers" [value]="c.id">
+                {{ c.customerName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="shippingSame" formControlName="shippingSame"
+              (change)="copyBillingToShipping()" />
+            <label for="shippingSame">Shipping address same as Billing</label>
+          </div>
+        </div>
+
+        <!-- Billing + Shipping side-by-side -->
+        <div class="address-grid">
+          <!-- BILLING -->
+          <div class="address-box">
+            <h4>Billing Address</h4>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" formControlName="billingName" />
+              </div>
+
+              <div class="form-group">
+                <label>GST Number</label>
+                <input class="form-control" formControlName="billingGSTIN" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>State Code</label>
+                <input class="form-control" formControlName="billingStateCode" />
+              </div>
+
+              <div class="form-group">
+                <label>State</label>
+                <input class="form-control" formControlName="billingState" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Address</label>
+              <input class="form-control" formControlName="billingAddress" />
+            </div>
+
+            <div class="form-group">
+              <label>City</label>
+              <input class="form-control" formControlName="billingCity" />
+            </div>
+          </div>
+
+          <!-- SHIPPING -->
+          <div class="address-box">
+            <h4>Shipping Address</h4>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" formControlName="shippingName" />
+              </div>
+
+              <div class="form-group">
+                <label>GSTIN</label>
+                <input class="form-control" formControlName="shippingGSTIN" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>State Code</label>
+                <input class="form-control" formControlName="shippingStateCode" />
+              </div>
+
+              <div class="form-group">
+                <label>State</label>
+                <input class="form-control" formControlName="shippingState" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Address</label>
+              <input class="form-control" formControlName="shippingAddress" />
+            </div>
+
+            <div class="form-group">
+              <label>City</label>
+              <input class="form-control" formControlName="shippingCity" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Vendor Code full width -->
+        <div class="form-group vendor-row">
+          <label>Vendor Code</label>
+          <input class="form-control" formControlName="vendorCode" />
+        </div>
+      </div>
+
+      <!-- ========== ITEMS SECTION ========== -->
+      <div class="section-card">
+        <h3 class="section-title">Items</h3>
+
+        <!-- Header -->
+        <div class="items-header">
+          <span>Product</span>
+          <span>Description</span>
+          <span>HSN</span>
+          <span>Qty</span>
+          <span>Rate</span>
+          <span>Disc%</span>
+          <span>CGST%</span>
+          <span>SGST%</span>
+          <span>IGST%</span>
+          <span>Total</span>
+          <span></span>
+        </div>
+
+        <!-- Rows -->
+        <div class="item-row" *ngFor="let item of items.controls; let i = index" [formGroup]="item">
+          <!-- Product Dropdown -->
+          <select class="form-control" formControlName="productId" (change)="onProductChange(i, $event)">
+            <option value="">Manual</option>
+            <option *ngFor="let p of products" [value]="p.id">
+              {{ p.name }}
+            </option>
+          </select>
+
+          <!-- Description -->
+          <input class="form-control" formControlName="name" />
+
+          <!-- HSN -->
+          <input class="form-control" formControlName="hsnCode" />
+
+          <!-- Qty -->
+          <input type="number" class="form-control no-arrows" formControlName="quantity" (input)="updateTotals()" />
+
+          <!-- Rate -->
+          <input type="number" class="form-control no-arrows" formControlName="unitPrice" (input)="updateTotals()" />
+
+          <!-- Discount % -->
+          <input type="number" class="form-control no-arrows" formControlName="discountPercent"
+            (input)="updateTotals()" />
+
+          <!-- CGST -->
+          <input type="number" class="form-control no-arrows" formControlName="cgstRate" (input)="updateTotals()" />
+
+          <!-- SGST -->
+          <input type="number" class="form-control no-arrows" formControlName="sgstRate" (input)="updateTotals()" />
+
+          <!-- IGST -->
+          <input type="number" class="form-control no-arrows" formControlName="igstRate" (input)="updateTotals()" />
+
+          <!-- Line Total -->
+          <input class="form-control" formControlName="lineTotal" readonly />
+
+          <!-- Remove -->
+          <button type="button" class="remove-btn" (click)="removeItem(i)">
+            ×
+          </button>
+        </div>
+
+        <!-- Add Item -->
+        <button type="button" class="add-item-btn" (click)="addItem()">
+          + Add Item
+        </button>
+      </div>
+
+      <!-- ========== ADDITIONAL CHARGES ========== -->
+      <div class="section-card">
+        <h3 class="section-title">Additional Charges</h3>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Transport Charges</label>
+            <input type="number" class="form-control" formControlName="transportCharges" (input)="updateTotals()" />
+          </div>
+
+          <div class="form-group">
+            <label>Loading Charges</label>
+            <input type="number" class="form-control" formControlName="loadingCharges" (input)="updateTotals()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== ACTION BUTTONS ========== -->
+      <div class="action-buttons">
+        <button type="button" class="btn-cancel" (click)="cancel()">
+          Cancel
+        </button>
+        <button type="button" class="btn-submit" (click)="submit()">
+          Save
+        </button>
+      </div>
+    </div>
+
+    <!-- ============== RIGHT: FLOATING SUMMARY COLUMN ============== -->
+    <div class="invoice-summary-col">
+      <div class="summary-card">
+        <h4 class="summary-title">Summary</h4>
+
+        <div class="summary-row">
+          <span>Sub Total</span>
+          <span>{{ form.value.subTotal || '0.00' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>CGST</span>
+          <span>{{ form.value.cgstTotal || '0.00' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>SGST</span>
+          <span>{{ form.value.sgstTotal || '0.00' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>IGST</span>
+          <span>{{ form.value.igstTotal || '0.00' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Transport</span>
+          <span>{{ form.value.transportCharges || '0.00' }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Loading</span>
+          <span>{{ form.value.loadingCharges || '0.00' }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Total Tax</span>
+          <span>{{ form.value.totalTax || '0.00' }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Grand Total</span>
+          <span>{{ form.value.grandTotal || '0.00' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

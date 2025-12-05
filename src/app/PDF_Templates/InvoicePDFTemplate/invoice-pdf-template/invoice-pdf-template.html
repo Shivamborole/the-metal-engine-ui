@@ -1,0 +1,74 @@
+<div class="settings-container">
+
+  <h2>PDF Template Settings</h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <!-- Logo Upload -->
+    <div class="section-card">
+      <h3>Company Logo</h3>
+
+      <div class="upload-box">
+        <input type="file" accept="image/*" (change)="onLogoChange($event)" />
+        <div *ngIf="logoPreview" class="preview">
+          <img [src]="logoPreview" />
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Code Upload -->
+    <div class="section-card">
+      <h3>Payment QR Code</h3>
+
+      <div class="upload-box">
+        <input type="file" accept="image/*" (change)="onQrChange($event)" />
+        <div *ngIf="qrPreview" class="preview">
+          <img [src]="qrPreview" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bank Details -->
+    <div class="section-card">
+      <h3>Bank Details</h3>
+
+      <div class="grid-2">
+        <div>
+          <label>Bank Name</label>
+          <input class="form-control" formControlName="bankName" />
+        </div>
+
+        <div>
+          <label>Account Number</label>
+          <input class="form-control" formControlName="accountNumber" />
+        </div>
+
+        <div>
+          <label>IFSC Code</label>
+          <input class="form-control" formControlName="ifsc" />
+        </div>
+
+        <div>
+          <label>Branch</label>
+          <input class="form-control" formControlName="branch" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes & Terms -->
+    <div class="section-card">
+      <h3>Footer Section</h3>
+
+      <label>Footer Note</label>
+      <textarea class="form-control" rows="2" formControlName="footerNote"></textarea>
+
+      <label>Terms & Conditions</label>
+      <textarea class="form-control" rows="4" formControlName="terms"></textarea>
+    </div>
+
+    <div class="action-buttons">
+      <button type="submit" class="btn-save">Save</button>
+    </div>
+
+  </form>
+</div>

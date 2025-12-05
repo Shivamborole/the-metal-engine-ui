@@ -1,0 +1,16 @@
+<div class="app-container" [class.dark]="theme.isDark()">
+
+  <!-- HEADER -->
+  <app-header></app-header>
+
+  <div class="main-body">
+    <!-- SIDEBAR -->
+    <app-sidebar></app-sidebar>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
+</div>

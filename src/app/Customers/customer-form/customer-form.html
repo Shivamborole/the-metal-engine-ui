@@ -1,0 +1,179 @@
+<div class="customer-form-container">
+
+  <h3 class="page-title">{{ id ? 'Edit Customer' : 'Add Customer' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <!-- BASIC INFO -->
+    <div class="section-card">
+      <div class="section-title">Basic Information</div>
+
+      <div class="form-grid">
+        <div>
+          <label>Customer Name *</label>
+          <input class="form-control" formControlName="customerName">
+        </div>
+
+        <div>
+          <label>Company Name</label>
+          <input class="form-control" formControlName="companyName">
+        </div>
+
+        <div>
+          <label>Customer Type *</label>
+          <select class="form-control" formControlName="customerType">
+            <option value="Individual">Individual</option>
+            <option value="Business">Business</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label>Email *</label>
+          <input class="form-control" formControlName="email">
+        </div>
+
+        <div>
+          <label>Phone *</label>
+          <input class="form-control" formControlName="phone">
+        </div>
+
+        <div>
+          <label>Alternate Phone</label>
+          <input class="form-control" formControlName="alternatePhone">
+        </div>
+      </div>
+    </div>
+
+    <!-- TAX -->
+    <div class="section-card">
+      <div class="section-title">Tax Details</div>
+
+      <div class="form-grid-2">
+        <div>
+          <label>GST Number</label>
+          <input class="form-control" formControlName="gstNumber">
+        </div>
+
+        <div>
+          <label>PAN Number</label>
+          <input class="form-control" formControlName="panNumber">
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING -->
+    <div class="section-card">
+      <div class="section-title">Billing Address</div>
+
+      <div class="form-grid-2">
+        <div>
+          <label>Address Line 1 *</label>
+          <input class="form-control" formControlName="billingAddressLine1">
+        </div>
+
+        <div>
+          <label>Address Line 2</label>
+          <input class="form-control" formControlName="billingAddressLine2">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label>City *</label>
+          <input class="form-control" formControlName="billingCity">
+        </div>
+
+        <div>
+          <label>State *</label>
+          <input class="form-control" formControlName="billingState">
+        </div>
+
+        <div>
+          <label>Pincode *</label>
+          <input class="form-control" formControlName="billingPincode">
+        </div>
+      </div>
+
+      <div class="form-check mt-2">
+        <input type="checkbox" class="form-check-input" id="same" formControlName="shippingSame">
+        <label class="form-check-label" for="same">Shipping same as billing</label>
+      </div>
+    </div>
+
+    <!-- SHIPPING -->
+    <div class="section-card">
+      <div class="section-title">Shipping Address</div>
+
+      <div class="form-grid-2">
+        <div>
+          <label>Address Line 1</label>
+          <input class="form-control" formControlName="shippingAddressLine1">
+        </div>
+
+        <div>
+          <label>Address Line 2</label>
+          <input class="form-control" formControlName="shippingAddressLine2">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label>City</label>
+          <input class="form-control" formControlName="shippingCity">
+        </div>
+
+        <div>
+          <label>State</label>
+          <input class="form-control" formControlName="shippingState">
+        </div>
+
+        <div>
+          <label>Pincode</label>
+          <input class="form-control" formControlName="shippingPincode">
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL -->
+    <div class="section-card">
+      <div class="section-title">Financial Details</div>
+
+      <div class="form-grid">
+        <div>
+          <label>Credit Limit</label>
+          <input type="number" class="form-control" formControlName="creditLimit">
+        </div>
+
+        <div>
+          <label>Opening Balance</label>
+          <input type="number" class="form-control" formControlName="openingBalance">
+        </div>
+
+        <div>
+          <label>Notes</label>
+          <textarea class="form-control" formControlName="notes"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+
+
+      <!-- <button class="btn-save" type="submit">
+      {{ id ? 'Update Customer' : 'Save Customer' }}
+    </button> -->
+      <button class="btn btn-primary btn-save" type="submit">
+        {{ id ? "Update Customer" : "Save Customer" }}
+      </button>
+
+
+      <button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
+
+    </div>
+
+
+  </form>
+
+
+</div>
