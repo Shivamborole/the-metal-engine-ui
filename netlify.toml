@@ -1,8 +1,13 @@
-# netlify.toml - Metal Engine UI
+# netlify.toml - Invoicing UI Deployment
 
 [build]
   command = "npm run build"
-  publish = "dist/the-metal-engine-ui"
+  publish = "dist/invoicing-ui/browser"
 
 [build.environment]
   NODE_VERSION = "20"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
