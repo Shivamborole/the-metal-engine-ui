@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   //private apiUrl = 'https://localhost:7025/api/Auth/login';   // UPDATE if needed
-  private apiUrl = 'https://localhost:7025/api/Auth';
-
+  //private apiUrl = 'https://localhost:7025/api/Auth';
+  private apiUrl = `${BASE_API_URL}/Auth`;
   constructor(
     private http: HttpClient,
     private router: Router

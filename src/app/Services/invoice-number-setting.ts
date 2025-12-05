@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
 export interface InvoiceNumberSettings {
   id: string;
   companyId: string;
@@ -23,8 +23,8 @@ export interface UpdateInvoiceNumberSettingsRequest {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-  private baseUrl = 'https://localhost:7025/api/settings';
-
+  //private baseUrl = 'https://localhost:7025/api/settings';
+  private baseUrl = `${BASE_API_URL}/settings`;
   constructor(private http: HttpClient) {}
 
   getInvoiceNumberSettings(companyId: string): Observable<InvoiceNumberSettings> {

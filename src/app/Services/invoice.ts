@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceService {
 
-  private baseUrl = 'https://localhost:7025/api/invoices';
-
+  //private baseUrl = 'https://localhost:7025/api/invoices';
+  private baseUrl = `${BASE_API_URL}/invoices`;
   constructor(private http: HttpClient) { }
 
   // ================================

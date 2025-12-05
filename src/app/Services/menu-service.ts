@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
 @Injectable({ providedIn: 'root' })
 export class MenuService {
-  private api = 'https://localhost:7025/api/menu';
+
+    private api = `${BASE_API_URL}/menu`;
+  //private api = 'https://localhost:7025/api/menu';
 
   constructor(private http: HttpClient) {}
 

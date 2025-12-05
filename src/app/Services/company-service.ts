@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
-
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
 
   // private activeCompanySubject = new BehaviorSubject<any>(null);
   // activeCompany$ = this.activeCompanySubject.asObservable();
 
-  private baseUrl = 'https://localhost:7025/api/company';
+  //private baseUrl = 'https://localhost:7025/api/company';
+    private baseUrl = `${BASE_API_URL}/company`;
   private apiUrl = 'https://localhost:7025/api/user/companies';
   constructor(private http: HttpClient) { }
 

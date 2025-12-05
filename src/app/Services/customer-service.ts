@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private baseUrl = 'https://localhost:7025/api/Customers';
-
+  //private baseUrl = 'https://localhost:7025/api/Customers';
+  private baseUrl = `${BASE_API_URL}/Customers`;
   constructor(private http: HttpClient) {}
 
   getCustomers(companyId: string): Observable<any[]> {
