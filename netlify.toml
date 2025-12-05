@@ -1,5 +1,3 @@
-# netlify.toml - Invoicing UI Deployment
-
 [build]
   command = "npm run build"
   publish = "dist/invoicing-ui/browser"
