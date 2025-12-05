@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
-import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
+import { BASE_API_URL } from '../Constants';
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
 

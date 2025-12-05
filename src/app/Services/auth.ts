@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { BASE_API_URL } from '../../../../invoicing-ui/src/app/Constants';
+import { BASE_API_URL } from '../Constants';
 
 
 @Injectable({
