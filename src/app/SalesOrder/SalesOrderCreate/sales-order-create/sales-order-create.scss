@@ -1,0 +1,294 @@
+/* ============================================
+   SALES ORDER PAGE (Invoice-matched styling)
+============================================ */
+
+.sales-page {
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.sales-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) 320px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.sales-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .sales-layout {
+    grid-template-columns: 1fr;
+  }
+  .sales-summary-col {
+    position: static;
+    margin-top: 16px;
+  }
+}
+
+/* ============================================
+   SECTION CARDS
+============================================ */
+
+.section-card {
+  background: #fff;
+  border: 1px solid #eef1f7;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* ============================================
+   FORM CONTROLS
+============================================ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-control {
+  width: 100%;
+  padding: 9px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  transition: 0.15s ease;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+  outline: none;
+}
+
+/* Remove arrows for number fields */
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-arrows {
+  -moz-appearance: textfield;
+}
+
+/* ============================================
+   SALES ORDER DETAILS GRID
+============================================ */
+
+.sales-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 20px;
+}
+
+@media (max-width: 960px) {
+  .sales-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .sales-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   CUSTOMER & ADDRESS
+============================================ */
+
+.customer-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.address-box {
+  background: #fafbfc;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.address-box h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+@media (max-width: 900px) {
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   ITEMS TABLE (GRID)
+============================================ */
+
+.items-header,
+.item-row {
+  display: grid;
+  grid-template-columns:
+    1.2fr 1.8fr 0.8fr 0.6fr 0.8fr 0.6fr 0.7fr 0.7fr 0.7fr 1fr 0.4fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.items-header {
+  background: #f9fafb;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.item-row {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+/* Add item button */
+.add-item-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #eff6ff;
+  border: 1px dashed #2563eb;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.add-item-btn:hover {
+  background: #dceaff;
+}
+
+/* Remove item button */
+.remove-btn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 6px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+}
+
+/* ============================================
+   SUMMARY PANEL
+============================================ */
+
+.sales-summary-col {
+  position: sticky;
+  top: 90px;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  border: 1px solid #eef1f7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.summary-total {
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* ============================================
+   ACTION BUTTONS (MATCH INVOICE)
+============================================ */
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn-submit,
+.btn-cancel {
+  padding: 10px 26px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+/* Save button */
+.btn-submit {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+/* Cancel button */
+.btn-cancel {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-cancel:hover {
+  background: #d1d5db;
+}

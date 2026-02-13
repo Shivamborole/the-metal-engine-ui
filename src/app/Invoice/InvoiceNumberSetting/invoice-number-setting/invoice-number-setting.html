@@ -30,10 +30,15 @@
       <div>
         <label>Reset Frequency</label>
         <select class="form-control" formControlName="resetFrequency">
-          <option value="Never">Never</option>
-          <option value="Yearly">Every Financial Year</option>
-          <option value="Monthly">Every Month</option>
+          <option [ngValue]="NumberResetFrequency.Never">Never</option>
+          <option [ngValue]="NumberResetFrequency.Yearly">
+            Every Financial Year
+          </option>
+          <option [ngValue]="NumberResetFrequency.Monthly">
+            Every Month
+          </option>
         </select>
+
       </div>
     </div>
 

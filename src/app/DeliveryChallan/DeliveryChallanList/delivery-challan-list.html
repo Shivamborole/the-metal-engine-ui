@@ -1,0 +1,78 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h2>Delivery Challans</h2>
+      <p>Filter and manage all delivery challans in the system.</p>
+    </div>
+
+    <button class="create-btn" (click)="createChallan()">
+      + New Delivery Challan
+    </button>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="form-group">
+      <label>Sales Order Number</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter SO Number..."
+        [(ngModel)]="filterSO"
+        (input)="applyFilter()"
+      />
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <table *ngIf="filteredChallans.length > 0" class="dc-table">
+    <thead>
+      <tr>
+        <th>DC No</th>
+        <th>Date</th>
+        <th>SO No</th>
+        <th>Customer</th>
+        <th>Type</th>
+        <th>Total Qty</th>
+        <th>Status</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let dc of filteredChallans">
+        <td>{{ dc.challanNumber }}</td>
+        <td>{{ dc.challanDate | date }}</td>
+        <td>{{ dc.salesOrderNumber }}</td>
+        <td>{{ dc.customerName }}</td>
+        <td>{{ dc.type === 1 ? 'Replacement' : 'Normal' }}</td>
+        <td>{{ dc.totalQty }}</td>
+
+        <td>
+          <span class="badge" [ngClass]="statusClass(dc.status)">
+            {{ statusLabel(dc.status) }}
+          </span>
+        </td>
+
+        <td class="text-right">
+          <div class="menu-container">
+            <button class="menu-btn" (click)="toggleMenu(dc.id)">⋮</button>
+            <div class="menu" *ngIf="openMenu === dc.id">
+              <button (click)="view(dc)">View</button>
+              <button (click)="edit(dc)">Edit</button>
+              <button (click)="print(dc)">Print PDF</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EMPTY STATE -->
+  <div *ngIf="filteredChallans.length === 0" class="info-box">
+    No challans found.
+  </div>
+
+</div>

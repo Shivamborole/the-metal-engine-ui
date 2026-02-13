@@ -1,0 +1,64 @@
+<div class="settings-page" [formGroup]="form">
+    <div class="settings-card">
+        <!-- Header -->
+        <h2>Sales Order Numbering</h2>
+        <p class="subtitle">
+            Control how Sales Order numbers are generated.
+        </p>
+
+        <!-- Loading / Error -->
+        <div *ngIf="loading" class="info-text">Loading settings…</div>
+        <div *ngIf="error" class="error-text">{{ error }}</div>
+
+        <!-- Form -->
+        <div class="form-grid" *ngIf="!loading">
+            <!-- Prefix -->
+            <div class="form-field">
+                <label>Prefix</label>
+                <input type="text" class="form-control" formControlName="prefix" />
+            </div>
+
+            <!-- Suffix -->
+            <div class="form-field">
+                <label>Suffix</label>
+                <input type="text" class="form-control" formControlName="suffix" />
+            </div>
+
+            <!-- Padding -->
+            <div class="form-field">
+                <label>Padding</label>
+                <input type="number" class="form-control" formControlName="padding" />
+            </div>
+
+            <!-- Reset Frequency -->
+            <div class="form-field">
+                <label>Reset Frequency</label>
+                <select class="form-control" formControlName="resetFrequency">
+                    <option [ngValue]="NumberResetFrequency.Never">Never</option>
+                    <option [ngValue]="NumberResetFrequency.Yearly">
+                        Every Financial Year
+                    </option>
+                    <option [ngValue]="NumberResetFrequency.Monthly">
+                        Every Month
+                    </option>
+                </select>
+
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-card" *ngIf="currentSettings">
+            <div class="preview-label">Next Sales Order Number</div>
+            <div class="preview-value">
+                {{ previewNextNumber }}
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button type="button" class="btn primary" [disabled]="saving || form.invalid" (click)="save()">
+                {{ saving ? 'Saving…' : 'Save Settings' }}
+            </button>
+        </div>
+    </div>
+</div>

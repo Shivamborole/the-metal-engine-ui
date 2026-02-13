@@ -1,0 +1,34 @@
+<h2>Sales Order: {{ so?.salesOrderNumber }}</h2>
+
+<div class="card">
+  <p><strong>Customer:</strong> {{ so?.customerName }}</p>
+  <p><strong>PO Number:</strong> {{ so?.poNumber }}</p>
+  <p><strong>Status:</strong> {{ so?.status }}</p>
+</div>
+
+<h3>Delivery Summary</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Ordered</th>
+      <th>Delivered</th>
+      <th>Pending</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let i of summary?.items">
+      <td>{{ i.itemName }}</td>
+      <td>{{ i.orderedQty }}</td>
+      <td>{{ i.deliveredQty }}</td>
+      <td>{{ i.pendingQty }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn-primary"
+        [routerLink]="['/sales/delivery-challans/create', so?.id]">
+  Create Delivery Challan
+</button>

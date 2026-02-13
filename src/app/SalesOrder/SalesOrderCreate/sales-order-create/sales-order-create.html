@@ -1,0 +1,294 @@
+<form [formGroup]="form" class="sales-page">
+
+    <div class="sales-layout">
+
+        <!-- LEFT COLUMN -->
+        <div class="sales-main-col">
+
+            <!-- HEADER -->
+            <div class="section-card">
+
+                <div class="header-row">
+
+                    <h2 class="section-title">
+                        @if (isViewMode) {
+                        View Sales Order
+                        } @else {
+                        Create Sales Order
+                        }
+                    </h2>
+
+                    @if (isViewMode) {
+                    <button type="button" class="btn-back" (click)="cancel()">
+                        Back
+                    </button>
+                    }
+
+                </div>
+
+                <div class="sales-details-grid">
+
+                    <!-- SO NUMBER -->
+                    <div class="form-group">
+
+                        <label>SO Number</label>
+
+                        <input type="text" class="form-control" formControlName="salesOrderNumber" readonly>
+
+                    </div>
+
+
+                    <!-- SO DATE -->
+                    <div class="form-group">
+
+                        <label>SO Date</label>
+
+                        <input type="date" class="form-control" formControlName="salesOrderDate"
+                            [readonly]="isViewMode">
+
+                    </div>
+
+
+                    <!-- PLACE OF SUPPLY -->
+                    <div class="form-group">
+
+                        <label>Place of Supply</label>
+
+                        <input type="text" class="form-control" formControlName="placeOfSupply" [readonly]="isViewMode">
+
+                    </div>
+
+
+                    <!-- PO NUMBER -->
+                    <div class="form-group">
+
+                        <label>PO Number</label>
+
+                        <input type="text" class="form-control" formControlName="purchaseOrderNo"
+                            [readonly]="isViewMode">
+
+                    </div>
+
+
+                    <!-- PO DATE -->
+                    <div class="form-group">
+
+                        <label>PO Date</label>
+
+                        <input type="date" class="form-control" formControlName="purchaseOrderDate"
+                            [readonly]="isViewMode">
+
+                    </div>
+
+
+                    <!-- NOTES -->
+                    <div class="form-group">
+
+                        <label>Notes</label>
+
+                        <input type="text" class="form-control" formControlName="Notes" [readonly]="isViewMode">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CUSTOMER -->
+            <div class="section-card">
+
+                <h2 class="section-title">Customer & Address</h2>
+
+
+                <!-- CUSTOMER SELECT -->
+                <div class="form-group">
+
+                    <label>Customer</label>
+
+                    <select class="form-control" formControlName="customerId" (change)="onCustomerChange($event)"
+                        [attr.disabled]="isViewMode ? true : null">
+
+                        <option value="">Select</option>
+
+                        @for (c of customers; track c.id) {
+
+                        <option [value]="c.id">
+
+                            {{ c.customerName }}
+
+                        </option>
+
+                        }
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- BILLING -->
+                <h3>Billing Address</h3>
+
+                <input class="form-control" formControlName="billingName" placeholder="Name" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="billingGSTIN" placeholder="GSTIN" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="billingState" placeholder="State" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="billingStateCode" placeholder="State Code"
+                    [readonly]="isViewMode">
+
+                <textarea class="form-control" formControlName="billingAddress" placeholder="Address"
+                    [readonly]="isViewMode">
+        </textarea>
+
+
+
+                <!-- SHIPPING -->
+                <h3>Shipping Address</h3>
+
+                <input class="form-control" formControlName="shippingName" placeholder="Name" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="shippingGSTIN" placeholder="GSTIN" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="shippingState" placeholder="State" [readonly]="isViewMode">
+
+                <input class="form-control" formControlName="shippingStateCode" placeholder="State Code"
+                    [readonly]="isViewMode">
+
+                <textarea class="form-control" formControlName="shippingAddress" placeholder="Address"
+                    [readonly]="isViewMode">
+        </textarea>
+
+
+            </div>
+
+
+
+            <!-- ITEMS -->
+            <div class="section-card">
+
+                <h2 class="section-title">Order Items</h2>
+
+
+                <div formArrayName="items">
+
+                    @for (row of items.controls; track $index; let i = $index) {
+
+                    <div class="item-row" [formGroupName]="i">
+
+
+                        <!-- PRODUCT -->
+                        <select class="form-control" formControlName="productId" (change)="onProductChange(i,$event)"
+                            [attr.disabled]="isViewMode ? true : null">
+
+                            <option value="">Select</option>
+
+                            @for (p of products; track p.id) {
+
+                            <option [value]="p.id">
+
+                                {{ p.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+
+
+                        <!-- NAME -->
+                        <input class="form-control" formControlName="name" [readonly]="isViewMode">
+
+
+
+                        <!-- QTY -->
+                        <input class="form-control" type="number" formControlName="quantity" (input)="updateTotals()"
+                            [readonly]="isViewMode">
+
+
+
+                        <!-- RATE -->
+                        <input class="form-control" type="number" formControlName="unitPrice" (input)="updateTotals()"
+                            [readonly]="isViewMode">
+
+
+
+                        <!-- TOTAL -->
+                        <input class="form-control" formControlName="lineTotal" readonly>
+
+
+
+                    </div>
+
+                    }
+
+                </div>
+
+
+                <!-- ADD ITEM -->
+                @if (!isViewMode) {
+
+                <button type="button" class="add-item-btn" (click)="addItem()">
+
+                    + Add Item
+
+                </button>
+
+                }
+
+            </div>
+
+
+
+            <!-- SUMMARY -->
+            <div class="section-card">
+
+                <div class="summary-row">
+
+                    <span>Grand Total</span>
+
+                    <span>
+
+                        {{ form.value.grandTotal }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTION BUTTONS -->
+            <div class="action-buttons">
+
+
+                @if (!isViewMode) {
+
+                <button type="button" class="btn-submit" (click)="submit()">
+
+                    Save Sales Order
+
+                </button>
+
+                }
+
+
+                <button type="button" class="btn-cancel" (click)="cancel()">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</form>

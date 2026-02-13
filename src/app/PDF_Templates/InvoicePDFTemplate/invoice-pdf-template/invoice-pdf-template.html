@@ -1,74 +1,208 @@
-<div class="settings-container">
-
-  <h2>PDF Template Settings</h2>
-
-  <form [formGroup]="form" (ngSubmit)="save()">
-
-    <!-- Logo Upload -->
-    <div class="section-card">
-      <h3>Company Logo</h3>
-
-      <div class="upload-box">
-        <input type="file" accept="image/*" (change)="onLogoChange($event)" />
-        <div *ngIf="logoPreview" class="preview">
-          <img [src]="logoPreview" />
-        </div>
-      </div>
+<!-- pdf-template-settings.component.html -->
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>PDF Template Settings</h1>
+      <p>Configure how your invoices will look and how customers can pay you.</p>
     </div>
+  </div>
 
-    <!-- QR Code Upload -->
-    <div class="section-card">
-      <h3>Payment QR Code</h3>
+  <div class="content-grid">
 
-      <div class="upload-box">
-        <input type="file" accept="image/*" (change)="onQrChange($event)" />
-        <div *ngIf="qrPreview" class="preview">
-          <img [src]="qrPreview" />
+    <!-- LEFT: FORM -->
+    <form class="form-column" [formGroup]="templateForm" (ngSubmit)="onSave()">
+
+      <!-- Branding Card -->
+      <section class="card">
+        <h2>Branding</h2>
+        <p class="card-subtitle">Control logo, colors and font for your invoices.</p>
+
+        <div class="field-group">
+          <label>Company Logo</label>
+          <div class="logo-upload-row">
+            <input type="file" accept="image/*" (change)="onLogoSelected($event)">
+            <div class="logo-preview" *ngIf="logoPreviewUrl">
+              <span>Preview</span>
+              <img [src]="logoPreviewUrl" alt="Logo Preview" />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Bank Details -->
-    <div class="section-card">
-      <h3>Bank Details</h3>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Primary Color</label>
+            <input type="color" formControlName="primaryColor">
+          </div>
+          <div class="field-group">
+            <label>Accent Color</label>
+            <input type="color" formControlName="accentColor">
+          </div>
+        </div>
 
-      <div class="grid-2">
-        <div>
+        <div class="field-group">
+          <label>Font Family</label>
+          <select formControlName="fontFamily">
+            <option value="Inter">Inter</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Poppins">Poppins</option>
+            <option value="System">System Default</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Payment Settings -->
+      <section class="card">
+        <h2>Payment Settings</h2>
+        <p class="card-subtitle">These details will be shown in the payment section of the invoice.</p>
+
+        <div class="field-group">
           <label>Bank Name</label>
-          <input class="form-control" formControlName="bankName" />
+          <input type="text" formControlName="bankName" placeholder="e.g. HDFC Bank">
         </div>
 
-        <div>
+        <div class="field-group">
           <label>Account Number</label>
-          <input class="form-control" formControlName="accountNumber" />
+          <input type="text" formControlName="accountNumber" placeholder="Account number for NEFT/IMPS">
         </div>
 
-        <div>
-          <label>IFSC Code</label>
-          <input class="form-control" formControlName="ifsc" />
+        <div class="field-row">
+          <div class="field-group">
+            <label>IFSC Code</label>
+            <input type="text" formControlName="ifscCode" placeholder="e.g. HDFC0001234">
+          </div>
+          <div class="field-group">
+            <label>Branch</label>
+            <input type="text" formControlName="branch" placeholder="Branch name">
+          </div>
         </div>
 
+        <div class="field-group">
+          <label>UPI ID (VPA)</label>
+          <input type="text" formControlName="upiId" placeholder="e.g. themetalengine@upi">
+        </div>
+
+        <div class="toggle-row">
+          <label>
+            <input type="checkbox" formControlName="showQr">
+            Show payment QR on invoice
+          </label>
+          <span class="help-text">
+            QR will be automatically generated using this UPI ID and the invoice amount.
+          </span>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section class="card">
+        <h2>Footer Section</h2>
+        <p class="card-subtitle">Short note and legal terms shown at the bottom of every invoice.</p>
+
+        <div class="field-group">
+          <label>Footer Note</label>
+          <textarea rows="2" formControlName="footerNote" placeholder="Thank you for your business."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Terms &amp; Conditions</label>
+          <textarea rows="4" formControlName="termsAndConditions" placeholder="Goods once sold will not be taken back..."></textarea>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn primary" type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Template' }}
+        </button>
+        <button class="btn ghost" type="button" (click)="onReset()">Reset</button>
+      </div>
+
+    </form> <!-- 🔥 This closing tag FIXES your NG01050 error -->
+
+    <!-- RIGHT: PREVIEW -->
+    <div class="preview-column">
+      <div class="preview-header">
         <div>
-          <label>Branch</label>
-          <input class="form-control" formControlName="branch" />
+          <h2>Invoice Preview</h2>
+          <p>This is how your invoice will appear to customers.</p>
+        </div>
+        <button class="btn subtle" type="button">Preview PDF</button>
+      </div>
+
+      <div class="invoice-preview-wrapper">
+        <div class="invoice-page" [ngStyle]="{'font-family': previewModel.fontFamily}">
+          <header class="invoice-header" [ngStyle]="{'border-bottom-color': previewModel.primaryColor}">
+            <div class="logo-block" *ngIf="previewModel.logoUrl; else logoPlaceholder">
+              <img [src]="previewModel.logoUrl" alt="Logo">
+            </div>
+            <ng-template #logoPlaceholder>
+              <div class="logo-placeholder">Your Logo</div>
+            </ng-template>
+
+            <div class="company-info">
+              <h1 [ngStyle]="{'color': previewModel.primaryColor}">TME Invoicing</h1>
+              <p>123 Industrial Estate, Pune</p>
+              <p>GSTIN: 22AAAAA0000A1Z5</p>
+            </div>
+          </header>
+
+          <section class="invoice-meta">
+            <div>
+              <h3>Invoice To</h3>
+              <p>Test Customer Pvt. Ltd.</p>
+            </div>
+            <div class="meta-right">
+              <p><strong>Invoice #</strong> INV-0001</p>
+              <p><strong>Date</strong> 01 Jan 2025</p>
+              <p><strong>Due</strong> 08 Jan 2025</p>
+            </div>
+          </section>
+
+          <section class="items-table">
+            <table>
+              <thead [ngStyle]="{'background-color': previewModel.primaryColor, 'color': '#fff'}">
+                <tr>
+                  <th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Laser Cut Mild Steel Tubes</td>
+                  <td>10</td>
+                  <td>₹ 1,000.00</td>
+                  <td>₹ 10,000.00</td>
+                </tr>
+                <tr>
+                  <td>Fabrication Charges</td>
+                  <td>1</td>
+                  <td>₹ 2,000.00</td>
+                  <td>₹ 2,000.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="payment-section">
+            <h3 [ngStyle]="{'color': previewModel.primaryColor}">Payment Details</h3>
+
+            <p><strong>Bank:</strong> {{ previewModel.bankName }}</p>
+            <p><strong>A/C No:</strong> {{ previewModel.accountNumber }}</p>
+            <p><strong>IFSC:</strong> {{ previewModel.ifscCode }}</p>
+            <p><strong>Branch:</strong> {{ previewModel.branch }}</p>
+            <p><strong>UPI:</strong> {{ previewModel.upiId }}</p>
+
+            <div class="qr-block" *ngIf="previewModel.showQr">
+              <div class="qr-placeholder">QR Code will appear here</div>
+            </div>
+          </section>
+
+          <footer class="invoice-footer" [ngStyle]="{'border-top-color': previewModel.accentColor}">
+            <p>{{ previewModel.footerNote }}</p>
+            <p>{{ previewModel.termsAndConditions }}</p>
+          </footer>
+
         </div>
       </div>
     </div>
 
-    <!-- Notes & Terms -->
-    <div class="section-card">
-      <h3>Footer Section</h3>
-
-      <label>Footer Note</label>
-      <textarea class="form-control" rows="2" formControlName="footerNote"></textarea>
-
-      <label>Terms & Conditions</label>
-      <textarea class="form-control" rows="4" formControlName="terms"></textarea>
-    </div>
-
-    <div class="action-buttons">
-      <button type="submit" class="btn-save">Save</button>
-    </div>
-
-  </form>
+  </div>
 </div>

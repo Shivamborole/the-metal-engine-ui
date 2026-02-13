@@ -7,16 +7,20 @@ import { RegisterComponent } from './RegisterUser/register-user/register-user';
 import { MainLayoutComponent } from './Layout/MainLayout/main-layout/main-layout';
 import { InvoiceNumberSettingsComponent } from './Invoice/InvoiceNumberSetting/invoice-number-setting/invoice-number-setting';
 import { InvoicePdfTemplate } from './PDF_Templates/InvoicePDFTemplate/invoice-pdf-template/invoice-pdf-template';
+import { CompanyListComponent } from './Company/company-list/company-list';
+import { CompanyProfileComponent } from './Company/CompanyProfile/company-profile/company-profile';
+import { SoNumberSetting } from './SalesOrder/SOnumberSetting/so-number-setting/so-number-setting';
+import { DCNumber } from './DeliveryChallan/DeliveryChallanNumber/dc-number/dc-number';
 
 export const routes: Routes = [
 
-  // ---------------- PUBLIC ROUTES ----------------
+  // PUBLIC ROUTES
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
 
-  // ---------------- PROTECTED ROUTES ----------------
+  // PROTECTED ROUTES
   {
     path: '',
     component: MainLayoutComponent,
@@ -26,92 +30,150 @@ export const routes: Routes = [
       // Dashboard
       { path: 'dashboard', component: Dashboard },
 
-      // Companies
+      // -------------- COMPANY ROUTES --------------
+      // Company List
       {
-        path: 'companies',
+        path: 'settings/ComapnyProfile',
         loadComponent: () =>
           import('./Company/company-list/company-list').then(m => m.CompanyListComponent)
       },
+
+      // Create Company → CompanyProfileComponent
       {
         path: 'companies/add',
         loadComponent: () =>
-          import('./Company/add-company/add-company').then(m => m.AddCompanyComponent)
+          import('./Company/CompanyProfile/company-profile/company-profile')
+            .then(m => m.CompanyProfileComponent)
       },
 
-      // Customers
+      // Edit Company
+      {
+        path: 'companies/edit/:id',
+        loadComponent: () =>
+          import('./Company/CompanyProfile/company-profile/company-profile')
+            .then(m => m.CompanyProfileComponent)
+      },
+
+      // View Company
+      {
+        path: 'companies/view/:id',
+        loadComponent: () =>
+          import('./Company/CompanyProfile/company-profile/company-profile')
+            .then(m => m.CompanyProfileComponent)
+      },
+
+      // -------------- CUSTOMERS --------------
       {
         path: 'customers',
         loadComponent: () =>
-          import('./Customers/customer-list/customer-list').then(m => m.CustomerListComponent)
+          import('./Customers/customer-list/customer-list')
+            .then(m => m.CustomerListComponent)
       },
       {
         path: 'customers/add',
         loadComponent: () =>
-          import('./Customers/customer-form/customer-form').then(m => m.CustomerFormComponent)
+          import('./Customers/customer-form/customer-form')
+            .then(m => m.CustomerFormComponent)
       },
       {
         path: 'customers/edit/:id',
         loadComponent: () =>
-          import('./Customers/customer-form/customer-form').then(m => m.CustomerFormComponent)
+          import('./Customers/customer-form/customer-form')
+            .then(m => m.CustomerFormComponent)
       },
+
+      // -------------- PRODUCTS --------------
       {
         path: 'products',
         loadComponent: () =>
-          import('../app/Products/ProductList/product-list/product-list').then(m => m.ProductListComponent)
+          import('./Products/ProductList/product-list/product-list')
+            .then(m => m.ProductListComponent)
       },
       {
         path: 'products/add',
         loadComponent: () =>
-          import('../app/Products/ProductForm/product-form/product-form').then(m => m.ProductFormComponent)
+          import('./Products/ProductForm/product-form/product-form')
+            .then(m => m.ProductFormComponent)
       },
       {
         path: 'products/edit/:id',
         loadComponent: () =>
-          import('../app/Products/ProductForm/product-form/product-form').then(m => m.ProductFormComponent)
+          import('./Products/ProductForm/product-form/product-form')
+            .then(m => m.ProductFormComponent)
       },
 
-
-      // ---------------- INVOICES MODULE ----------------
-
-      // INVOICE LIST
+      // -------------- INVOICES --------------
       {
         path: 'sales/invoices',
         loadComponent: () =>
-          import('../app/Invoice/InvoiceList/invoice-list/invoice-list').then(m => m.InvoiceList)
+          import('./Invoice/InvoiceList/invoice-list/invoice-list')
+            .then(m => m.InvoiceList)
+      },
+      {
+        path: 'sales/challans',
+        loadComponent: () =>
+          import('./DeliveryChallan/DeliveryChallanList/delivery-challan-list')
+            .then(m => m.DeliveryChallansComponent)
+      },
+      {
+        path: 'sales/challans/create',
+        loadComponent: () =>
+          import('./DeliveryChallan/DeliveryChallanCreate/delivery-challan-create/delivery-challan-create')
+            .then(m => m.DeliveryChallanCreateComponent)
+      },
+      {
+        path: 'sales/sales-order-list',
+        loadComponent: () =>
+          import('./SalesOrder/SalesOrderList/sales-order-list/sales-order-list')
+            .then(m => m.SalesOrderListComponent)
+      },
+      {
+        path: 'sales/sales-orders/create',
+        loadComponent: () =>
+          import('./SalesOrder/SalesOrderCreate/sales-order-create/sales-order-create')
+            .then(m => m.SalesOrderCreateComponent)
       },
 
-      // CREATE INVOICE
       {
         path: 'invoice/new',
         loadComponent: () =>
-          import('./Invoice/invoice-form/invoice-form').then(m => m.InvoiceForm)
+          import('./Invoice/invoice-form/invoice-form')
+            .then(m => m.InvoiceForm)
       },
-
-      // EDIT INVOICE
       {
         path: 'invoice/edit/:id',
         loadComponent: () =>
-          import('./Invoice/invoice-form/invoice-form').then(m => m.InvoiceForm)
+          import('./Invoice/invoice-form/invoice-form')
+            .then(m => m.InvoiceForm)
+      },
+      {
+        path: 'sales/sales-orders/details/:id',
+        loadComponent: () =>
+          import('./SalesOrder/SalesOrderCreate/sales-order-create/sales-order-create')
+            .then(m => m.SalesOrderCreateComponent)
       },
 
+      // -------------- SETTINGS --------------
       {
-        path: 'settings',
-        children: [
-          { path: '', redirectTo: 'invoice-number', pathMatch: 'full' },
-          { path: 'invoice-number', component: InvoiceNumberSettingsComponent }
-        ]
+        path: 'settings/invoice-number',
+        component: InvoiceNumberSettingsComponent
       },
- {
+      {
+        path: 'settings/SO-number',
+        component: SoNumberSetting
+      },
+      {
+        path: 'settings/DC-number',
+        component: DCNumber
+      },
+      {
         path: 'settings/invoice-pdf-template',
-        children: [
-          { path: '', redirectTo: 'invoice-number', pathMatch: 'full' },
-          { path: 'invoice-number', component: InvoicePdfTemplate }
-        ]
-      },
-      // (Add products here later)
+        component: InvoicePdfTemplate
+      }
     ]
   },
 
-  // ---------------- FALLBACK ----------------
+  // FALLBACK
   { path: '**', redirectTo: 'login' }
 ];
+

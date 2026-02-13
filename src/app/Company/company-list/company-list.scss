@@ -2,6 +2,7 @@
   padding: 20px;
 }
 
+/* ----------------------- PAGE HEADER ----------------------- */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -13,7 +14,7 @@
     font-weight: 600;
   }
 
-  .add-btn {
+  .btn.primary {
     background: #2563eb;
     color: #fff;
     padding: 8px 14px;
@@ -29,150 +30,124 @@
   }
 }
 
-.table-container {
+/* ----------------------- TABLE WRAPPER ----------------------- */
+.table-card {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.company-table {
+/* ----------------------- TABLE ----------------------- */
+table.table {
   width: 100%;
   border-collapse: collapse;
 
-  th {
-    text-align: left;
-    padding: 12px 10px;
-    font-size: 14px;
-    font-weight: 600;
+  thead {
     background: #f3f4f6;
+
+    th {
+      padding: 12px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+    }
   }
 
-  td {
-    padding: 12px 10px;
-    font-size: 14px;
-    border-bottom: 1px solid #e5e7eb;
-  }
+  tbody {
+    tr {
+      border-bottom: 1px solid #e5e7eb;
 
-  tr:hover td {
-    background: #f9fafb;
-  }
-}
+      &:hover {
+        background: #f9fafb;
+      }
+    }
 
-.status-badge {
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #555;
-  background: #e5e7eb;
-
-  &.active-badge {
-    background: #d1fae5;
-    color: #065f46;
+    td {
+      padding: 12px 10px;
+      font-size: 14px;
+    }
   }
 }
 
-.use-btn {
-  background: #2563eb;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition: 0.2s;
-
-  &:hover:not(:disabled) {
-    background: #1d4ed8;
-  }
-
-  &:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-  }
-}
-
-.loading {
-  font-size: 14px;
-  color: #555;
-}
-
-.error {
-  color: red;
-  font-weight: 600;
-}
-.actions-col {
-  display: flex;
-  gap: 10px;
-}
-
-.delete-btn {
-  background: #ef4444;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition: 0.2s;
-
-  &:hover:not(:disabled) {
-    background: #dc2626;
-  }
-
-  &:disabled {
-    background: #fca5a5;
-    cursor: not-allowed;
-  }
-}
-
-.status-badge {
+/* ----------------------- STATUS BADGES ----------------------- */
+.badge {
   display: inline-block;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 12px;
   font-weight: 600;
+
+  &.active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &.inactive {
+    background: #e5e7eb;
+    color: #555;
+  }
 }
 
-.active-badge {
-  background: #d1f7d6;
-  color: #0f8a00;
+/* ----------------------- ACTION BUTTONS ----------------------- */
+.action-buttons {
+  display: flex;
+  gap: 8px;
 }
 
-.inactive-badge {
-  background: #eee;
-  color: #777;
-}
-
-.use-btn {
-  background: #0d6efd;
-  border: none;
+/* Base button style */
+.btn.small {
   padding: 6px 12px;
   border-radius: 6px;
-  color: white;
-  margin-right: 8px;
-  cursor: pointer;
-}
-
-.use-btn:disabled {
-  background: #9bb9ff;
-  cursor: not-allowed;
-}
-
-.delete-btn {
-  background: #dc3545;
+  font-size: 13px;
+  font-weight: 500;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  color: white;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.delete-btn:disabled {
-  background: #f5a3aa;
+/* VIEW BUTTON */
+.btn.info {
+  background: #0ea5e9;
+  color: white;
+
+  &:hover {
+    background: #0284c7;
+  }
+}
+
+/* EDIT BUTTON */
+.btn.warning {
+  background: #f59e0b;
+  color: white;
+
+  &:hover {
+    background: #d97706;
+  }
+}
+
+/* SET ACTIVE BUTTON */
+.btn.success {
+  background: #10b981;
+  color: white;
+
+  &:hover {
+    background: #059669;
+  }
+}
+
+/* DELETE BUTTON */
+.btn.danger {
+  background: #ef4444;
+  color: white;
+
+  &:hover {
+    background: #dc2626;
+  }
+}
+  
+/* Disabled state */
+button:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
 }
-

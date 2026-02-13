@@ -1,0 +1,147 @@
+<div class="page-wrapper" *ngIf="!loading">
+
+  <!-- Wrap EVERYTHING inside the form -->
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <!-- Sticky Header -->
+    <div class="header-bar">
+      <div>
+        <h1>{{ isEditMode ? "Edit Company" : "Add Company" }}</h1>
+        <p class="subtitle">Manage your business identity, branding, and financial details.</p>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn ghost" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn primary" [disabled]="form.invalid">
+          {{ isEditMode ? "Update" : "Create" }}
+        </button>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- BRANDING CARD -->
+      <section class="card big-card">
+        <h2>Brand Identity</h2>
+        <p class="subtext">Your logo & basic information appear on invoices and documents.</p>
+
+        <div class="branding-grid">
+
+          <!-- LOGO UPLOAD -->
+          <div class="logo-section">
+            <div class="logo-preview" *ngIf="logoPreview; else logoPlaceholder">
+              <img [src]="logoPreview" alt="Logo">
+            </div>
+
+            <ng-template #logoPlaceholder>
+              <div class="logo-placeholder">
+                <span>No Logo</span>
+              </div>
+            </ng-template>
+
+            <label class="upload-btn">
+              Upload Logo
+              <input type="file" accept="image/*" (change)="onLogoSelect($event)">
+            </label>
+
+            <button *ngIf="logoPreview" type="button" class="btn small danger" (click)="removeLogo()">
+              Remove Logo
+            </button>
+          </div>
+
+          <!-- BASIC INFO -->
+          <div class="info-grid">
+            <div class="field">
+              <label>Company Name *</label>
+              <input type="text" formControlName="name">
+            </div>
+
+            <div class="field">
+              <label>GST Number</label>
+              <input type="text" formControlName="gstNumber">
+            </div>
+
+            <div class="field full">
+              <label>Address</label>
+              <input type="text" formControlName="address">
+            </div>
+
+            <div class="field">
+              <label>City</label>
+              <input type="text" formControlName="city">
+            </div>
+
+            <div class="field">
+              <label>State</label>
+              <input type="text" formControlName="state">
+            </div>
+
+            <div class="field">
+              <label>Country</label>
+              <input type="text" formControlName="country">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT DETAILS -->
+      <section class="card">
+        <h2>Contact Information</h2>
+        <p class="subtext">Displayed on invoices and customer communication.</p>
+
+        <div class="grid">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" formControlName="email">
+          </div>
+
+          <div class="field">
+            <label>Phone Number</label>
+            <input type="text" formControlName="mobileNumber">
+          </div>
+
+          <div class="field full">
+            <label>Website</label>
+            <input type="text" formControlName="website">
+          </div>
+        </div>
+      </section>
+
+      <!-- BANK DETAILS -->
+      <section class="card">
+        <h2>Banking Details</h2>
+        <p class="subtext">Used for payment QR & invoice payment instructions.</p>
+
+        <div class="grid">
+          <div class="field">
+            <label>Bank Name</label>
+            <input type="text" formControlName="bankName">
+          </div>
+
+          <div class="field">
+            <label>Account Number</label>
+            <input type="text" formControlName="accountNumber">
+          </div>
+
+          <div class="field">
+            <label>IFSC Code</label>
+            <input type="text" formControlName="ifsc">
+          </div>
+
+          <div class="field">
+            <label>Branch Name</label>
+            <input type="text" formControlName="branchName">
+          </div>
+
+          <div class="field full">
+            <label>UPI ID</label>
+            <input type="text" formControlName="upiId">
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </form> <!-- END FORM -->
+
+</div>

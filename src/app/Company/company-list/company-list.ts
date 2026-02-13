@@ -25,6 +25,7 @@ export class CompanyListComponent implements OnInit {
     this.loadCompanies();
   }
 
+  // ------------------------- LOAD COMPANIES -------------------------
   loadCompanies() {
     this.loading = true;
 
@@ -40,10 +41,36 @@ export class CompanyListComponent implements OnInit {
     });
   }
 
-  goToAdd() {
-    this.router.navigate(['/companies/add']);
-  }
+  // ------------------------- ADD NEW COMPANY -------------------------
+  // goToAdd() {
+  //   this.router.navigate(['/settings/company-profile/create']);
+  // }
 
+  // // ------------------------- VIEW COMPANY -------------------------
+  // viewCompany(id: string) {
+  //   this.router.navigate([`/settings/company-profile/view/${id}`]);
+  // }
+
+  // // ------------------------- EDIT COMPANY -------------------------
+  // editCompany(id: string) {
+  //   this.router.navigate([`/settings/company-profile/edit/${id}`]);
+  // }
+
+
+  goToAdd() {
+  this.router.navigate(['/companies/add']);
+}
+
+viewCompany(id: string) {
+  this.router.navigate([`/companies/view/${id}`]);
+}
+
+editCompany(id: string) {
+  this.router.navigate([`/companies/edit/${id}`]);
+}
+
+
+  // ------------------------- DELETE COMPANY -------------------------
   deleteCompany(id: string) {
     if (!confirm("Are you sure you want to delete this company?")) return;
 
@@ -55,26 +82,25 @@ export class CompanyListComponent implements OnInit {
     });
   }
 
-  useCompany(company: any) {
-    this.companyService.setActiveCompany(company.id).subscribe({
+  // ------------------------- SET ACTIVE COMPANY -------------------------
+  setActive(id: string) {
+    this.companyService.setActiveCompany(id).subscribe({
       next: (res: any) => {
 
         alert(res.message);
 
-        // After activation → fetch active company again
+        // Update active company in service
         this.companyService.getActiveCompany().subscribe(active => {
           if (active) {
-           this.companyService.setActiveCompanyState(active as { companyId: string; companyName: string });
+            this.companyService.setActiveCompanyState(active as { companyId: string; companyName: string });
           }
         });
 
-
-        // Refresh table
+        // Refresh UI
         this.loadCompanies();
       },
       error: () => alert("Failed to activate company")
     });
   }
-
 
 }

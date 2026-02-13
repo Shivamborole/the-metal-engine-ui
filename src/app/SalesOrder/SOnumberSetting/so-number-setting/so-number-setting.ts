@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,32 +13,27 @@ import {
 } from '../../../Services/settings-service';
 import { CompanyService } from '../../../Services/company-service';
 
-/**
- * Must match backend enum exactly:
- * 0 = Never
- * 1 = Yearly
- * 2 = Monthly
- */
+
+
 export enum NumberResetFrequency {
   Never = 0,
   Yearly = 1,
   Monthly = 2,
 }
-
 @Component({
-  selector: 'app-invoice-number-settings',
+  selector: 'app-so-number-setting',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './invoice-number-setting.html',
-  styleUrls: ['./invoice-number-setting.scss'],
+  templateUrl: './so-number-setting.html',
+  styleUrl: './so-number-setting.scss',
 })
-export class InvoiceNumberSettingsComponent implements OnInit {
+export class SoNumberSetting implements OnInit {
   form!: FormGroup;
   loading = false;
   saving = false;
   error = '';
 
-  currentSettings: InvoiceNumberSettings | null = null;
+  currentSettings!: InvoiceNumberSettings;
   previewNextNumber = '';
 
   // expose enum to template
@@ -53,12 +48,9 @@ export class InvoiceNumberSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
 
-    this.companyService.activeCompany$.subscribe((active) => {
-      if (!active?.companyId) {
-        this.error = 'No active company selected.';
-        return;
-      }
-      this.loadSettings(active.companyId);
+    this.companyService.activeCompany$.subscribe((c) => {
+      if (!c?.companyId) return;
+      this.loadSettings(c.companyId);
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -70,10 +62,13 @@ export class InvoiceNumberSettingsComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this.fb.group({
-      prefix: ['', [Validators.maxLength(20)]],
-      suffix: ['', [Validators.maxLength(20)]],
+      prefix: ['SO-', Validators.required],
+      suffix: [''],
       padding: [5, [Validators.required, Validators.min(1), Validators.max(10)]],
-      resetFrequency: [NumberResetFrequency.Yearly, Validators.required],
+      resetFrequency: [
+        NumberResetFrequency.Yearly,
+        Validators.required,
+      ],
     });
   }
 
@@ -81,7 +76,7 @@ export class InvoiceNumberSettingsComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.settingsService.getInvoiceNumberSettings(companyId).subscribe({
+    this.settingsService.getSalesOrderNumberSettings(companyId).subscribe({
       next: (res) => {
         this.currentSettings = res;
 
@@ -96,8 +91,8 @@ export class InvoiceNumberSettingsComponent implements OnInit {
         this.loading = false;
       },
       error: () => {
+        this.error = 'Failed to load Sales Order number settings.';
         this.loading = false;
-        this.error = 'Failed to load invoice number settings.';
       },
     });
   }
@@ -112,22 +107,20 @@ export class InvoiceNumberSettingsComponent implements OnInit {
 
     let baseNumber = this.currentSettings.currentNumber;
 
-    // If frequency changed, preview should reset
+    // if reset frequency changed, preview should restart
     if (selectedFrequency !== this.currentSettings.resetFrequency) {
       baseNumber = 0;
     }
 
-    const next = (baseNumber + 1).toString().padStart(padding, '0');
-    this.previewNextNumber = `${prefix}${next}${suffix}`;
+    const nextSeq = (baseNumber + 1)
+      .toString()
+      .padStart(padding, '0');
+
+    this.previewNextNumber = `${prefix}${nextSeq}${suffix}`;
   }
 
   save(): void {
-    if (!this.currentSettings) return;
-
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+    if (!this.currentSettings || this.form.invalid) return;
 
     this.saving = true;
     this.error = '';
@@ -136,16 +129,17 @@ export class InvoiceNumberSettingsComponent implements OnInit {
       prefix: this.form.value.prefix || '',
       suffix: this.form.value.suffix || '',
       padding: this.form.value.padding,
-      resetFrequency: this.form.value.resetFrequency as NumberResetFrequency,
+      resetFrequency:
+        this.form.value.resetFrequency as NumberResetFrequency,
     };
 
     this.settingsService
-      .updateInvoiceNumberSettings(this.currentSettings.id, payload)
+      .updateSalesOrderNumberSettings(this.currentSettings.id, payload)
       .subscribe({
         next: () => {
           // keep local state in sync
           this.currentSettings = {
-            ...this.currentSettings!,
+            ...this.currentSettings,
             ...payload,
           };
 
@@ -153,8 +147,8 @@ export class InvoiceNumberSettingsComponent implements OnInit {
           this.saving = false;
         },
         error: () => {
+          this.error = 'Failed to save Sales Order number settings.';
           this.saving = false;
-          this.error = 'Failed to save settings.';
         },
       });
   }

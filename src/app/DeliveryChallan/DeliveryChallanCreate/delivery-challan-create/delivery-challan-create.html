@@ -1,0 +1,147 @@
+<form [formGroup]="form" class="dc-page">
+
+  <div class="dc-layout">
+
+    <!-- ================= LEFT ================= -->
+    <div class="dc-main-col">
+
+      <!-- HEADER -->
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Create Delivery Challan</h2>
+            <p class="section-subtitle">Generate challan against a Sales Order</p>
+          </div>
+        </div>
+
+        <div class="dc-details-grid">
+
+          <div class="form-group">
+            <label>Challan Number</label>
+            <input class="form-control" formControlName="challanNumber" [attr.disabled]="true" />
+          </div>
+
+          <div class="form-group">
+            <label>Challan Date</label>
+            <input type="date" class="form-control" formControlName="challanDate" />
+          </div>
+
+          <div class="form-group">
+            <label>Challan Type</label>
+            <select class="form-control" formControlName="challanType">
+              <option [value]="0">Normal</option>
+              <option [value]="1">Replacement</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Vehicle Number</label>
+            <input class="form-control" formControlName="vehicleNumber" />
+          </div>
+
+          <div class="form-group">
+            <label>Transporter Name</label>
+            <input class="form-control" formControlName="transporterName" />
+          </div>
+
+          <div class="form-group span-3">
+            <label>Notes</label>
+            <input class="form-control" formControlName="notes" />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SALES ORDER -->
+      <div class="section-card">
+        <h2 class="section-title">Sales Order & Customer</h2>
+
+        <div class="so-customer-grid">
+
+          <div class="form-group">
+            <label>Select Sales Order</label>
+            <select class="form-control"
+                    formControlName="salesOrderId"
+                    (change)="onSOChange($event)">
+              <option value="">Select Sales Order</option>
+              <option *ngFor="let so of salesOrders" [value]="so.id">
+                {{ so.salesOrderNumber }} — {{ so.customerName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Customer</label>
+            <input class="form-control"
+                   formControlName="customerName"
+                   [attr.disabled]="true" />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ITEMS -->
+      <div class="section-card">
+        <h2 class="section-title">Items To Deliver</h2>
+
+        <div class="items-header">
+          <span>Product</span>
+          <span>Ordered</span>
+          <span>Delivered</span>
+          <span>Remaining</span>
+          <span>Deliver Now</span>
+        </div>
+
+        <div formArrayName="items">
+
+          <div class="item-row"
+               *ngFor="let row of items.controls; let i = index"
+               [formGroupName]="i">
+
+            <input class="form-control" formControlName="productName" [attr.disabled]="true" />
+            <input class="form-control" formControlName="orderedQty" [attr.disabled]="true" />
+            <input class="form-control" formControlName="deliveredQty" [attr.disabled]="true" />
+            <input class="form-control" formControlName="remainingQty" [attr.disabled]="true" />
+
+            <div>
+              <input type="number"
+                     class="form-control no-arrows"
+                     formControlName="deliverNowQty"
+                     (input)="validateRow(row)"
+                     [ngClass]="{ 'input-error': row.get('error')?.value }" />
+              <small class="error-text" *ngIf="row.get('error')?.value">
+                {{ row.get('error')?.value }}
+              </small>
+            </div>
+
+          </div>
+
+          <div *ngIf="items.length === 0" class="no-items-info">
+            Select a Sales Order to load items.
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="action-buttons">
+        <button class="btn-secondary" type="button" (click)="cancel()">Cancel</button>
+        <button class="btn-primary" type="button" (click)="submit()">Save Delivery Challan</button>
+      </div>
+
+    </div>
+
+    <!-- ================= RIGHT ================= -->
+    <div class="dc-summary-col">
+      <div class="summary-card">
+        <div class="summary-title">Summary</div>
+
+        <div class="summary-row"><span>Total Items</span><span>{{ summary.totalItems }}</span></div>
+        <div class="summary-row"><span>Total Ordered Qty</span><span>{{ summary.totalOrderedQty }}</span></div>
+        <div class="summary-row"><span>Deliver This Trip</span><span>{{ summary.deliverThisTrip }}</span></div>
+        <div class="summary-row"><span>Remaining After Delivery</span><span>{{ summary.remainingAfterThisTrip }}</span></div>
+      </div>
+    </div>
+
+  </div>
+</form>

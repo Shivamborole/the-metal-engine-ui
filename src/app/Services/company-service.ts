@@ -48,6 +48,9 @@ getActiveCompany() {
 }
 
 
+updateCompany(id: string, data: any) {
+  return this.http.put(`${this.baseUrl}/update/${id}`, data);
+}
 
 
 }

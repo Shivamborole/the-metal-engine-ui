@@ -1,0 +1,172 @@
+/* ==============================
+   PAGE CONTAINER
+================================ */
+
+.settings-page {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 0 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ==============================
+   CARD
+================================ */
+
+.settings-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px 28px 28px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* ==============================
+   HEADINGS
+================================ */
+
+.settings-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+/* ==============================
+   FORM GRID
+================================ */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 22px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ==============================
+   INPUTS
+================================ */
+
+.form-control {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.form-control:focus {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+  outline: none;
+}
+
+/* ==============================
+   PREVIEW CARD
+================================ */
+
+.preview-card {
+  margin-top: 22px;
+  padding: 14px 16px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.preview-label {
+  font-size: 13px;
+  color: #475569;
+}
+
+.preview-value {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: #0f172a;
+}
+
+/* ==============================
+   ACTIONS
+================================ */
+
+.actions {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Primary button */
+.btn.primary {
+  background: #2563eb;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btn.primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ==============================
+   STATES
+================================ */
+
+.info-text {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.error-text {
+  font-size: 13px;
+  color: #ef4444;
+  margin-bottom: 10px;
+}
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 720px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-card {
+    padding: 20px 18px 22px;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .btn.primary {
+    width: 100%;
+  }
+}

@@ -1,97 +1,146 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PdfTemplateService } from '../../../Services/pdf-template-service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+interface PdfTemplateSettings {
+  logoUrl?: string | null;
+  primaryColor: string;
+  accentColor: string;
+  fontFamily: string;
+  bankName: string;
+  accountNumber: string;
+  ifscCode: string;
+  branch: string;
+  upiId: string;
+  showQr: boolean;
+  footerNote: string;
+  termsAndConditions: string;
+}
 
 @Component({
-  standalone: true,
-  selector: 'app-pdf-template-settings',
+  selector: 'app-invoice-pdf-template',
   templateUrl: './invoice-pdf-template.html',
-  styleUrls: ['./invoice-pdf-template.scss'],
-  imports: [CommonModule, ReactiveFormsModule]
+    imports:[CommonModule,
+    ReactiveFormsModule,   // REQUIRED
+    FormsModule  ],
+  styleUrls: ['./invoice-pdf-template.scss']
 })
 export class InvoicePdfTemplate implements OnInit {
+ templateForm!: FormGroup;
+  previewModel!: PdfTemplateSettings;
+  logoPreviewUrl: string | null = null;
+  isSaving = false;
 
-  form!: FormGroup;
-  logoPreview: string | null = null;
-  qrPreview: string | null = null;
-
-  constructor(
-    private fb: FormBuilder,
-    private pdfSettingsService: PdfTemplateService
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.buildForm();
-    this.loadSettings();
-  }
 
-  buildForm() {
-    this.form = this.fb.group({
-      logo: [null],
-      logoUrl: [''],
+    // --- INITIALIZE FORM ----
+    this.templateForm = this.fb.group({
+      primaryColor: ['#1f2937'],
+      accentColor: ['#6b7280'],
+      fontFamily: ['Inter'],
 
-      qrCode: [null],
-      qrUrl: [''],
-
-      bankName: ['', Validators.required],
-      accountNumber: ['', Validators.required],
-      ifsc: ['', Validators.required],
+      bankName: [''],
+      accountNumber: [''],
+      ifscCode: [''],
       branch: [''],
+      upiId: [''],
+      showQr: [true],
 
       footerNote: [''],
-      terms: [''],
+      termsAndConditions: ['']
+    });
+
+    // --- INITIAL PREVIEW MODEL ---
+    this.previewModel = {
+      logoUrl: null,
+      primaryColor: '#1f2937',
+      accentColor: '#6b7280',
+      fontFamily: 'Inter',
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+      branch: '',
+      upiId: '',
+      showQr: true,
+      footerNote: '',
+      termsAndConditions: ''
+    };
+
+    // --- SYNC FORM CHANGES TO PREVIEW ---
+    this.templateForm.valueChanges.subscribe(value => {
+      this.previewModel = {
+        ...this.previewModel,
+        ...value,
+        logoUrl: this.logoPreviewUrl
+      };
     });
   }
 
-  // Load settings from backend
-  loadSettings() {
-    // this.pdfSettingsService.get().subscribe(settings => {
-    //   this.form.patchValue(settings);
-      
-    //   this.logoPreview = settings.logoUrl || null;
-    //   this.qrPreview = settings.qrUrl || null;
-    // });
-  }
+  // --- HANDLE LOGO UPLOAD ---
+  onLogoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
 
-  // Upload logo
-  onLogoChange(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    this.form.patchValue({ logo: file });
-
-    const reader = new FileReader();
-    reader.onload = (e: any) => this.logoPreview = e.target.result;
-    reader.readAsDataURL(file);
-  }
-
-  // Upload QR code
-  onQrChange(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    this.form.patchValue({ qrCode: file });
-
-    const reader = new FileReader();
-    reader.onload = (e: any) => this.qrPreview = e.target.result;
-    reader.readAsDataURL(file);
-  }
-
-  save() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (!input.files || input.files.length === 0) {
       return;
     }
 
-    const formData = new FormData();
-    Object.keys(this.form.controls).forEach(key => {
-      formData.append(key, this.form.get(key)?.value);
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.logoPreviewUrl = reader.result as string;
+      this.previewModel = {
+        ...this.previewModel,
+        logoUrl: this.logoPreviewUrl
+      };
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // --- SAVE TEMPLATE SETTINGS ---
+  onSave(): void {
+    if (this.templateForm.invalid) return;
+
+    this.isSaving = true;
+
+    const payload = {
+      ...this.templateForm.value,
+      logoUrl: null // backend handles actual file path
+    };
+
+    console.log("Saving PDF Template Settings:", payload);
+
+    // Replace this with API call
+    setTimeout(() => {
+      this.isSaving = false;
+      alert('Template Saved Successfully!');
+    }, 600);
+  }
+
+  // --- RESET SETTINGS ---
+  onReset(): void {
+    this.templateForm.reset({
+      primaryColor: '#1f2937',
+      accentColor: '#6b7280',
+      fontFamily: 'Inter',
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+      branch: '',
+      upiId: '',
+      showQr: true,
+      footerNote: '',
+      termsAndConditions: ''
     });
 
-    // this.pdfSettingsService.save(formData).subscribe({
-    //   next: () => alert("PDF Settings saved successfully"),
-    //   error: () => alert("Failed to save PDF settings")
-    // });
+    this.logoPreviewUrl = null;
+
+    this.previewModel = {
+      ...this.templateForm.value,
+      logoUrl: null
+    };
   }
 }

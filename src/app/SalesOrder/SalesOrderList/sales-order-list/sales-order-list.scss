@@ -1,0 +1,91 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .btn-primary {
+    background: #4f46e5;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: #4338ca;
+    }
+  }
+}
+
+.table-wrapper {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 12px 8px;
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+  }
+
+  tr:hover {
+    background: #f9fafb;
+  }
+
+  .badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.draft {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    &.approved {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    &.cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  }
+
+  .link-btn {
+    color: #4f46e5;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      color: #4338ca;
+    }
+  }
+}

@@ -1,0 +1,294 @@
+/* ============================================
+   PAGE LAYOUT
+============================================ */
+
+.dc-page {
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 20px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) 320px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.dc-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .dc-layout {
+    grid-template-columns: 1fr;
+  }
+  .dc-summary-col {
+    position: static;
+    margin-top: 12px;
+  }
+}
+
+/* ============================================
+   SECTION CARDS
+============================================ */
+
+.section-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  border: 1px solid #eef1f7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 6px;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ============================================
+   FORM CONTROLS
+============================================ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-control {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #fff;
+  color: #111827;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+  outline: none;
+}
+
+.form-control[disabled],
+.form-control[readonly] {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* Remove number arrows */
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-arrows {
+  -moz-appearance: textfield;
+}
+
+/* ============================================
+   GRID LAYOUTS
+============================================ */
+
+.dc-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 22px;
+}
+
+.span-3 {
+  grid-column: span 3;
+}
+
+@media (max-width: 960px) {
+  .dc-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .dc-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SO + Customer */
+.so-customer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 22px;
+}
+
+@media (max-width: 700px) {
+  .so-customer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   ITEMS GRID / DELIVER TABLE
+============================================ */
+
+.items-header,
+.item-row {
+  display: grid;
+  grid-template-columns:
+    2fr     /* Product */
+    1fr     /* Ordered */
+    1fr     /* Delivered */
+    1fr     /* Remaining */
+    1fr;    /* Deliver Now */
+  gap: 14px;
+  align-items: center;
+}
+
+.items-header {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+.item-row {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+/* No items */
+.no-items-info {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Deliver Now validation */
+.deliver-now-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-error {
+  border-color: #dc2626 !important;
+  background: #fef2f2 !important;
+}
+
+.error-text {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+
+/* ============================================
+   SUMMARY PANEL
+============================================ */
+
+.dc-summary-col {
+  position: sticky;
+  top: 90px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  border: 1px solid #eef1f7;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+}
+
+.summary-title {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #d1d5db;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ============================================
+   ACTION BUTTONS (MATCH INVOICE)
+============================================ */
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Blue Primary */
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Grey Secondary */
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+.btn-secondary:hover {
+  background: #d1d5db;
+}

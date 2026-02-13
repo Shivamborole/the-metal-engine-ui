@@ -1,0 +1,190 @@
+/* ============================================================
+   PAGE LAYOUT
+============================================================ */
+
+.page {
+  padding: 24px 32px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+  }
+}
+
+/* ============================================================
+   CREATE BUTTON
+============================================================ */
+
+.create-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.2);
+}
+
+.create-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ============================================================
+   FILTER BAR
+============================================================ */
+
+.filter-bar {
+  background: #ffffff;
+  border: 1px solid #eef1f7;
+  padding: 18px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 260px;
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input {
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+  }
+}
+
+/* ============================================================
+   TABLE STYLING
+============================================================ */
+
+.dc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+
+  th {
+    background: #f9fafb;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    text-align: left;
+    border-bottom: 1px solid #eef1f7;
+  }
+
+  td {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 1px solid #f1f3f9;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* ============================================================
+   STATUS BADGES
+============================================================ */
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-warning { background: #fff7ed; color: #d97706; }
+.badge-success { background: #ecfdf5; color: #059669; }
+.badge-danger  { background: #fee2e2; color: #dc2626; }
+
+/* ============================================================
+   EMPTY MESSAGE BOX
+============================================================ */
+
+.info-box {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* ============================================================
+   ACTION MENU (3 DOTS)
+============================================================ */
+
+.menu-container {
+  position: relative;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #374151;
+  padding: 4px;
+}
+
+.menu-btn:hover {
+  color: #111827;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 24px;
+  width: 150px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  z-index: 50;
+
+  button {
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+}

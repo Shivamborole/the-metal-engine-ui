@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>Sales Orders</h1>
+
+  <button class="btn-primary" [routerLink]="['/sales/sales-orders/create']">
+    + Create Sales Order
+  </button>
+</div>
+
+<div class="table-wrapper">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>SO Number</th>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Total Qty</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let so of salesOrders" (click)="openDetail(so.id)">
+        <td>{{ so.salesOrderNumber }}</td>
+        <td>{{ so.salesOrderDate | date }}</td>
+        <td>{{ so.customerName }}</td>
+        <td>{{ so.totalQty }}</td>
+
+        <td>
+          <span 
+            class="badge"
+            [ngClass]="{
+              'draft': so.status === 'Draft',
+              'approved': so.status === 'Approved',
+              'cancelled': so.status === 'Cancelled'
+            }">
+            {{ so.status }}
+          </span>
+        </td>
+
+        <td (click)="$event.stopPropagation()">
+          <span class="link-btn" (click)="openDetail(so.id)">View</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
